@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Collectors | Feline Edition</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-dark: #1a1a1b;
+            --text-muted: #7e7e7e;
+            --white: #ffffff;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            padding: 50px 20px;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            padding-left: 10px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .collector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            position: relative;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 85%;
+            height: 80%;
+            border-radius: 15px;
+            z-index: 1;
+        }
+
+        .card:nth-child(3n+1) .card-bg { background: linear-gradient(135deg, #ffcfb4 0%, #ffad99 100%); }
+        .card:nth-child(3n+2) .card-bg { background: linear-gradient(135deg, #d8d0ff 0%, #b2a4ff 100%); }
+        .card:nth-child(3n+3) .card-bg { background: linear-gradient(135deg, #c4f4e2 0%, #a2e9cf 100%); }
+
+        .heart-icon {
+            position: absolute;
+            top: 20px;
+            right: 65px;
+            z-index: 2;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .avatar-wrapper {
+            position: absolute;
+            top: 1px;
+            bottom: 5px;
+            left: 5px;
+            z-index: 3;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .avatar-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-box {
+            position: absolute;
+            top: 100px;
+            left: 45px;
+            width: 80%;
+            background: var(--white);
+            border-radius: 15px;
+            padding: 60px 25px 30px 25px;
+            box-shadow: var(--shadow);
+            z-index: 2;
+            min-height: 280px;
+        }
+
+        .content-box h2 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+
+        .content-box .subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .content-box p {
+            font-size: 0.95rem;
+            color: #4a4a4a;
+            line-height: 1.4;
+        }
+
+        .no-data {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .collector-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Meet our friends!🐱</h1>
+        </header>
+
+        <main class="collector-grid">
+            {% for cat in cats %}
+            <div class="card">
+                <div class="card-bg"></div>
+                <div class="heart-icon">♡</div>
+                
+                <div class="avatar-wrapper">
+                    {% if cat.cat_pict %}
+                        <img src="{{ cat.cat_pict }}" alt="{{ cat.cat_breed }}">
+                    {% endif %}
+                </div>
+
+                <div class="content-box">
+                    <h2>{{ cat.cat_breed }}</h2>
+                    <span class="subtitle">{{cat.cat_temprament}}</span>
+                    <p>{{ cat.cat_desc }}</p>
+                </div>
+
+            </div>
+            {% else %}
+            <div class="no-data">
+                <h2>No collectors found.</h2>
+            </div>
+            {% endfor %}
+        </main>
+    </div>
+
+</body>
+</html>
